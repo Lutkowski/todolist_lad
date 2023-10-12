@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useMemo, useState} from "react";
+import Task from "./components/Task";
+import Button from "./components/UI/Button/Button";
+import TaskForm from "./components/TaskForm";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [tasks, setTasks] = useState(
+        [
+            {id: 1, content: 'Погладить кота', status: 'В процессе', importance: 'Средняя'},
+            {id: 2, content: 'Почесать кота', status: 'Отложена', importance: 'Важная'},
+        ]
+    );
+    const addTask = (newTask) => {
+        setTasks([...tasks, newTask]);
+    };
+    const deleteTask = (id) => {
+        setTasks(tasks.filter((task) => task.id !== id))
+    }
+    const [taskQuery,setTaskQuery] = useState('');
+    const searchedTasks = useMemo(() => {
+        return tasks.filter(task => task.content.includes(taskQuery))
+        },
+        [tasks,taskQuery]);
+    const changeQuery = (e) => {
+        setTaskQuery(e.target.value);
+    };
+    return (
+        <div className="App">
+            <input value={taskQuery} onChange={changeQuery} type="text" placeholder="Найти задачу"/>
+            <h1>Сегодня у вас {tasks.length} задач</h1>
+            <Button>Добавить задачу</Button>
+            {searchedTasks.map((task) => (
+                <Task deleteTask={deleteTask} key={task.id} {...task} />
+            ))}
+            <TaskForm addTask={addTask} length={tasks.length}/>
+        </div>
+    );
 }
 
 export default App;

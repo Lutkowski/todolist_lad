@@ -1,0 +1,6 @@
+.task{
+    display: flex;
+    justify-content: space-between;
+    margin-top:21px;
+    border-bottom: 2px solid #E0E0E0;
+}

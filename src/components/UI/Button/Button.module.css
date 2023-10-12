@@ -1,0 +1,9 @@
+.add__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #884CB2;
+    padding:8px 30px;
+    border: none;
+}
