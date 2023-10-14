@@ -1,6 +1,7 @@
 .task{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
     margin-top:21px;
     border-bottom: 2px solid #E0E0E0;
+    gap:10px;
 }
