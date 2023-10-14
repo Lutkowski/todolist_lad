@@ -7,19 +7,22 @@ import {addCompletedTask} from "../store/tasksCompletedSlice";
 
 const Task = (props) => {
     const dispatch = useDispatch();
+
+    const statusClass = props.status === 'В процессе' ? 'inProcess' : props.status === 'В ожидании' ? 'Pending' : '';
+
     return (
         <div className={classes.task}>
             <div className="task__content">{props.content}</div>
-            <select disabled={props.disabled} className="task__status">
+            <select disabled={props.disabled} className={`${statusClass}`}>
                 <option>{props.status}</option>
-                {[{key:1,status:'В процессе'}, {key:2,status:'Отложена'}].map(status =>
+                {[{key: 1, status: 'В процессе'}, {key: 2, status: 'Отложена'}].map(status =>
                     status.status !== props.status ?
                         <option key={status.key}>{status.status}</option> : undefined)}
             </select>
             <select disabled={props.disabled} className="task__importance">
                 <option>{props.importance}</option>
-                {[{key: 1, importanceLevel: 'Низкая'}, {key:2, importanceLevel: 'Средняя'}, {
-                    key:3,
+                {[{key: 1, importanceLevel: 'Низкая'}, {key: 2, importanceLevel: 'Средняя'}, {
+                    key: 3,
                     importanceLevel: 'Важная'
                 }].map(importance =>
                     importance.importanceLevel !== props.importance ?
@@ -29,10 +32,9 @@ const Task = (props) => {
                 dispatch(addCompletedTask(props))
                 dispatch(deleteTask(props.id))
             }} type="checkbox"/>
-            <button disabled={props.disabled} onClick={() =>
-            {
+            <button disabled={props.disabled} onClick={() => {
                 dispatch(deleteTask(props.id))
-            }} className="task__delete">Удалить</button>
+            }} className="task__delete">&times;</button>
         </div>
     );
 };

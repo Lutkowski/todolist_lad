@@ -1,4 +1,4 @@
-import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchTodos = createAsyncThunk('tasks/fetchTodos', async () => {
@@ -7,12 +7,13 @@ export const fetchTodos = createAsyncThunk('tasks/fetchTodos', async () => {
 });
 const tasksSlice = createSlice({
     name: 'tasks',
-    status: null,
+    status: true,
+    totalCount: 0,
     initialState: {
         tasks:
             [
-                {id: 1, content: 'Погладить кота', status: 'В процессе', importance: 'Средняя'},
-                {id: 2, content: 'Почесать кота', status: 'Отложена', importance: 'Важная'},
+                {id: 1, content: 'Задача раз', status: 'В процессе', importance: 'Средняя'},
+                {id: 2, content: 'Задача два', status: 'Отложена', importance: 'Важная'},
             ],
     },
     reducers: {
@@ -38,19 +39,17 @@ const tasksSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchTodos.fulfilled, (state, action) => {
-                state.status = 'succeeded';
+                state.status = true;
                 const transformedArray = action.payload.map(item => ({
                     id: item.id,
                     content: item.title,
                     status: 'Отложена',
-                    importance: 'Средняя'
+                    importance: 'Средняя',
                 }));
-                console.log(transformedArray);
                 state.tasks = transformedArray;
             })
             .addCase(fetchTodos.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
+                state.status = false;
             });
     },
 

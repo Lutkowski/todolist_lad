@@ -1,21 +1,30 @@
 import React, {useMemo} from 'react';
 import Task from "./Task";
 import {useSelector} from "react-redux";
+import classes from "./TaskList.module.css";
 
-const TaskList = ({taskQuery}) => {
+const TaskList = ({currentPage, taskQuery}) => {
     const tasks = useSelector(state => state.tasks.tasks);
+    const tasksStatus = useSelector((state) => state.tasks.status);
+    const startIndex = (currentPage - 1) * 10;
+    const endIndex = startIndex + 10;
+    const currentTasks = tasks.slice(startIndex, endIndex);
     const searchedTasks = useMemo(() => {
-            return tasks.filter(task => task.content.includes(taskQuery))
+            return currentTasks.filter(task => task.content.includes(taskQuery))
         },
-        [tasks, taskQuery]);
+        [currentTasks, taskQuery]);
     return (
-        <div>
+        <div className={classes.myTaskList}>
             <h2>Текущие</h2>
-            <div>
-                {searchedTasks.map((task) => (
-                    <Task disabled={false} key={task.id} {...task} />
-                ))}
-            </div>
+            <ul>
+                {tasksStatus === true || tasksStatus === undefined ?
+                    searchedTasks.map((task) => (
+                        <li key={task.id}><Task disabled={false} key={task.id} {...task} /></li>
+                    ))
+                    :
+                    <li>Посты не загружены</li>
+                }
+            </ul>
         </div>
     );
 };

@@ -1,10 +1,9 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
+import classes from "./Search.module.css";
 
-const Search = () => {
-
+const Search = (props) => {
     return (
-        <div>
-        </div>
+        <input className={classes.mySearch} {...props} />
     );
 };
 

@@ -1,0 +1,16 @@
+.myHeader{
+    background: #884CB2;
+    padding:20px;
+    font-family: Montserrat, sans-serif;;
+    color: white;
+    font-size: 14px;
+}
+.myHeader ul{
+    display: flex;
+    list-style-type: none;
+    gap:10px;
+}
+.myHeader a{
+    color:white;
+    text-decoration: none;
+}

@@ -1,31 +1,23 @@
-import React, {useState} from "react";
-import Button from "./components/UI/Button/Button";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
-import {useSelector, useDispatch} from "react-redux";
-import TaskCompleted from "./components/TaskCompleted";
-import {fetchTodos} from "./store/tasksSlice";
-function App() {
-    const [taskQuery,setTaskQuery] = useState('');
-    const changeQuery = (e) => {
-        setTaskQuery(e.target.value);
-    };
-    const tasks = useSelector(state => state.tasks.tasks);
-    const dispatch = useDispatch();
-    const handleFetchTasks = () => {
-        dispatch(fetchTodos()); // Вызовите действие для загрузки задач с сервера
-    };
+import React from 'react';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import About from "./pages/About";
+import Tasks from "./pages/Tasks";
+import NotFound from "./pages/NotFound";
+import Header from "./components/Header";
+import './styles/App.css';
+
+const App = () => {
     return (
-        <div className="App">
-            <input value={taskQuery} onChange={changeQuery} type="text" placeholder="Найти задачу"/>
-            <h1>Сегодня у вас {tasks.length} задач</h1>
-            <Button>Добавить задачу</Button>
-            <Button onClick={handleFetchTasks} style={{marginTop:'5px'}}>Подгрузить задачи с сервера</Button>
-            <TaskList taskQuery={taskQuery}></TaskList>
-            <TaskForm length={tasks.length}/>
-            <TaskCompleted></TaskCompleted>
-        </div>
+        <BrowserRouter>
+            <Header/>
+            <Routes>
+                <Route path="/about" element={<About/>}/>
+                <Route path="/tasks" element={<Tasks/>}/>
+                <Route path="*" element={<Navigate to="/not-found"/>}/>
+                <Route path="/not-found" element={<NotFound/>}/>
+            </Routes>
+        </BrowserRouter>
     );
-}
+};
 
 export default App;

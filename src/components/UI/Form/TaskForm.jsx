@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import Button from "./UI/Button/Button";
 import {useDispatch} from "react-redux";
-import {addTask} from "../store/tasksSlice";
+import Button from "../Button/Button";
+import {addTask} from "../../../store/tasksSlice";
+import classes from "./TaskForm.module.css";
+
 const TaskForm = (props) => {
     const [taskText, setTaskText] = useState('');
     const [taskPriority, setTaskPriority] = useState('Низкая');
@@ -19,7 +21,7 @@ const TaskForm = (props) => {
         setTaskText('');
     };
     return (
-        <form style={{display: "flex"}} onSubmit={handleSubmit}>
+        <form className={classes.myForm} onSubmit={handleSubmit}>
             <input type="text" value={taskText} onChange={handleTextChange}/>
             <select onChange={handlePriorityChange}>
                 <option value="Низкая">Низкая</option>

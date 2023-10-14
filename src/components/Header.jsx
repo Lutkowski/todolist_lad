@@ -1,10 +1,20 @@
 import React from 'react';
-import Search from "./UI/Search/Search";
+import classes from "./Header.module.css";
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
-        <header>
-            <Search/>
+        <header className={classes.myHeader}>
+            <nav>
+                <ul>
+                    <Link to={"/tasks"}>
+                        <li>Задачи</li>
+                    </Link>
+                    <Link to={"/about"}>
+                        <li>О проекте</li>
+                    </Link>
+                </ul>
+            </nav>
         </header>
     );
 };
